@@ -2,22 +2,24 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Món quà 8/3 🌸</title>
     <style>
         body, html {
             margin: 0; padding: 0; width: 100%; height: 100%;
-            font-family: 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Arial, sans-serif;
             background: linear-gradient(135deg, #ffc3a0 0%, #ffafbd 40%, #c9ffbf 100%);
             display: flex; justify-content: center; align-items: center;
-            overflow: hidden; touch-action: manipulation;
+            overflow: hidden; 
+            /* Ngăn chặn các thao tác mặc định gây giật lag trên mobile */
+            touch-action: none; 
         }
 
-        /* 1. MÀN HÌNH KHÓA */
+        /* 1. MÀN HÌNH KHÓA (Mobile Optimized) */
         #start-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.55);
-            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
             z-index: 1000; display: flex; flex-direction: column;
             justify-content: center; align-items: center;
             transition: opacity 0.8s ease;
@@ -25,18 +27,18 @@
 
         .floating-code {
             position: absolute; pointer-events: none; z-index: -1;
-            animation: fast-float linear infinite;
+            white-space: nowrap; animation: fast-float linear infinite;
         }
 
         .real-code {
-            color: rgba(217, 102, 127, 0.8);
-            font-weight: 900; font-size: 26px;
-            text-shadow: 0 0 10px rgba(217, 102, 127, 0.3);
+            color: rgba(217, 102, 127, 0.85);
+            font-weight: 900; font-size: 22px; /* Giảm nhẹ size cho mobile */
+            text-shadow: 0 0 8px rgba(217, 102, 127, 0.3);
         }
 
         .decoy-code {
             color: rgba(0, 0, 0, 0.2);
-            font-weight: 700; font-size: 18px;
+            font-weight: 700; font-size: 16px;
         }
 
         @keyframes fast-float {
@@ -47,91 +49,107 @@
         }
 
         .login-box {
-            text-align: center; background: white; padding: 30px;
-            border-radius: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            width: 280px; z-index: 1001;
+            text-align: center; background: white; 
+            padding: 25px; border-radius: 20px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 80%; max-width: 280px; /* Co giãn theo màn hình */
+            z-index: 1001;
         }
 
         input[type="text"] {
-            padding: 12px; width: 85%; border: 2px solid #ffafbd;
-            border-radius: 12px; font-size: 18px; text-align: center; outline: none; margin-bottom: 15px;
+            padding: 15px; width: 85%; border: 2px solid #ffafbd;
+            border-radius: 12px; font-size: 18px; text-align: center; 
+            outline: none; margin-bottom: 15px;
+            /* Ngăn chặn iOS tự động phóng to khi nhập */
+            font-size: 16px; 
         }
 
         #submit-btn {
-            padding: 12px 30px; background: #d9667f; color: white;
+            padding: 14px 35px; background: #d9667f; color: white;
             border: none; border-radius: 12px; font-size: 16px;
-            cursor: pointer; font-weight: bold; position: relative;
+            cursor: pointer; font-weight: bold; width: 100%;
         }
 
-        /* 2. CHỮ HAPPY WOMEN'S DAY BAY Ở DƯỚI (LỚP NỀN) */
+        /* 2. CHỮ BAY DƯỚI THIỆP */
         .flying-text {
             position: absolute;
-            color: rgba(255, 255, 255, 0.7); /* Màu trắng mờ ảo */
-            font-size: 24px; font-weight: bold; font-style: italic;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 18px; font-weight: bold; font-style: italic;
             white-space: nowrap; pointer-events: none;
-            z-index: 1; /* CHỈ SỐ THẤP: Bay dưới tấm thiệp */
+            z-index: 1;
             animation: fly-horizontal linear infinite;
         }
 
         @keyframes fly-horizontal {
-            0% { transform: translateX(-60vw); opacity: 0; }
+            0% { transform: translateX(-100vw); opacity: 0; }
             10% { opacity: 1; }
             90% { opacity: 1; }
-            100% { transform: translateX(110vw); opacity: 0; }
+            100% { transform: translateX(100vw); opacity: 0; }
         }
 
-        /* 3. TẤM THIỆP (LỚP TRÊN) */
+        /* 3. TẤM THIỆP (Tối ưu chiều rộng mobile) */
         .card {
-            background: white; width: 85%; max-width: 400px;
-            border-radius: 25px; padding: 25px; text-align: center;
+            background: white; 
+            width: 85%; /* Chiếm 85% chiều ngang điện thoại */
+            max-width: 350px;
+            border-radius: 25px; padding: 20px; text-align: center;
             opacity: 0; transform: scale(0.9);
             transition: all 0.8s ease-out;
-            z-index: 10; /* CHỈ SỐ CAO: Nằm đè lên chữ bay */
-            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+            z-index: 10;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
         }
         .card.show { opacity: 1; transform: scale(1); }
-        .card-image { max-width: 80%; height: auto; margin: 15px auto; border-radius: 15px; }
+        
+        .card-image { 
+            width: 100%; /* Ảnh tự động co giãn theo khung thiệp */
+            max-width: 250px;
+            height: auto; margin: 10px auto; border-radius: 15px; 
+        }
+
+        p.message {
+            text-align: justify; line-height: 1.5; color: #444; 
+            padding: 0 5px; font-size: 14px;
+        }
     </style>
 </head>
 <body>
 
     <div id="start-screen">
         <div class="login-box">
-            <h3 style="color: #d9667f;">Thử thách 8/3</h3>
-            <p style="font-size: 11px; color: #888; margin-bottom: 15px;">Gợi ý: Mật mã là số đậm nhất</p>
-            <input type="text" id="pass-input" placeholder="Nhập mã..." maxlength="4">
+            <h3 style="color: #d9667f; margin-top: 0;">Giải mã 8/3</h3>
+            <p style="font-size: 12px; color: #888; margin-bottom: 15px;">Tìm mã 1006 đậm nhất đang bay!</p>
+            <input type="text" id="pass-input" placeholder="Mã là gì?" maxlength="4" inputmode="numeric">
             <br>
-            <button id="submit-btn" onclick="checkPass()">Mở quà🎁</button>
+            <button id="submit-btn" onclick="checkPass()">Mở quà ngay</button>
         </div>
     </div>
 
     <div id="flying-text-container"></div>
 
     <div class="card" id="main-card">
-        <h2 style="color: #d68953; font-size: 14px; letter-spacing: 1px;">NGÀY QUỐC TẾ PHỤ NỮ 8/3</h2>
-        <img src="hoa.png" alt="8/3" class="card-image">
-        <div style="color: #d68953; font-size: 18px; font-weight: bold; font-style: italic; margin-bottom: 15px;">Happy Women's Day</div>
-        <p style="text-align: justify; line-height: 1.6; color: #444; padding: 0 10px;">
-            Chúc cậu có một ngày 8/3 thật vui vẻ và ý nghĩa. Chúc cậu luôn giữ được nụ cười trên môi, luôn luôn vui vẻ và hạnh phúc, sớm gặt hái được nhiều thành công và may mắn trong cuộc sống. Hãy luôn yêu thương bản thân mình nhé!
-        <div class="footer-text">Chúc cậu ngày 8/3 rạng rỡ ❤️</div>
-        
+        <h2 style="color: #d68953; font-size: 12px; letter-spacing: 1px;">NGÀY QUỐC TẾ PHỤ NỮ 8/3</h2>
+        <img src="hoa.jpg" alt="8/3" class="card-image">
+        <div style="color: #d68953; font-size: 18px; font-weight: bold; font-style: italic; margin: 10px 0;">happy women's day</div>
+        <p class="message">
+            Chúc cậu có một ngày 8/3 thật vui vẻ và ý nghĩa. Luôn cười thật tươi và hạnh phúc với những gì mình đang có nhé! ❤️
+        </p>
     </div>
 
-    <audio id="bg-music" preload="auto"><source src="布鲁昔 - 漫步香港1999 (完整版) - (128 Kbps).mp3" type="audio/mpeg"></audio>
+    <audio id="bg-music" preload="auto"><source src="nhac.mp3" type="audio/mpeg"></audio>
 
     <script>
-        const CORRECT_CODE = "0803"
-        const startTime = 68;
-        const endTime = 90  
+        const CORRECT_CODE = "1006";
+        const startTime = 10; 
+        const endTime = 40;   
 
         const bgMusic = document.getElementById('bg-music');
         const btn = document.getElementById('submit-btn');
 
-        // Tạo bão số (Lớp rất thấp)
         function createNumbers() {
             const screen = document.getElementById('start-screen');
-            const decoys = ["2026", "0803", "1111", "9999", "520", "1314", "1009", "1001"];
-            for (let i = 0; i < 85; i++) {
+            const decoys = ["2026", "0803", "1111", "9999", "520", "1314", "1001"];
+            // Giảm số lượng mã một chút để tránh giật lag trên máy yếu
+            for (let i = 0; i < 60; i++) {
                 let span = document.createElement('span');
                 span.className = 'floating-code';
                 if (i % 8 === 0) {
@@ -141,28 +159,26 @@
                     span.innerText = decoys[Math.floor(Math.random() * decoys.length)];
                     span.classList.add('decoy-code');
                 }
-                span.style.left = Math.random() * 100 + 'vw';
-                span.style.top = Math.random() * 100 + 'vh';
-                const moveX = (Math.random() * 300 - 150) + 'vw';
-                const moveY = (Math.random() * 300 - 150) + 'vh';
+                span.style.left = Math.random() * 90 + 'vw';
+                span.style.top = Math.random() * 90 + 'vh';
+                const moveX = (Math.random() * 200 - 100) + 'vw';
+                const moveY = (Math.random() * 200 - 100) + 'vh';
                 span.style.setProperty('--move-x', moveX);
                 span.style.setProperty('--move-y', moveY);
                 span.style.animationDuration = (Math.random() * 2 + 3) + 's';
-                span.style.animationDelay = (Math.random() * -10) + 's';
                 screen.appendChild(span);
             }
         }
 
-        // Tạo chữ bay ở lớp nền
         function createFlyingTexts() {
             const container = document.getElementById('flying-text-container');
-            for (let i = 0; i < 15; i++) {
+            for (let i = 0; i < 12; i++) {
                 let span = document.createElement('span');
                 span.className = 'flying-text';
                 span.innerText = "Happy Women's Day";
                 span.style.top = Math.random() * 90 + 'vh';
-                span.style.animationDuration = (Math.random() * 6 + 8) + 's';
-                span.style.animationDelay = (Math.random() * -20) + 's';
+                span.style.animationDuration = (Math.random() * 5 + 6) + 's';
+                span.style.animationDelay = (Math.random() * -15) + 's';
                 container.appendChild(span);
             }
         }
@@ -174,15 +190,17 @@
             const val = document.getElementById('pass-input').value;
             if (val === CORRECT_CODE) {
                 bgMusic.currentTime = startTime;
-                bgMusic.play().catch(e => console.log("Cần tương tác"));
+                bgMusic.play().catch(() => {
+                    // Mobile yêu cầu tương tác người dùng để phát nhạc
+                    console.log("Phát nhạc...");
+                });
                 document.getElementById('start-screen').style.opacity = '0';
                 setTimeout(() => {
                     document.getElementById('start-screen').style.display = 'none';
                     document.getElementById('main-card').classList.add('show');
                 }, 800);
             } else {
-                btn.style.left = (Math.random() * 80 - 40) + 'px';
-                btn.style.top = (Math.random() * 80 - 40) + 'px';
+                alert("Mã chưa đúng rồi, hãy nhìn kỹ các số đang bay!");
             }
         }
 
